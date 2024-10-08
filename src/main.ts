@@ -14,15 +14,33 @@ button.innerHTML = "🐀";
 app.append(button);
 
 let count = 0;
-function countIncrement() { //function for easy reuse and setInterval
-    count+=1;
-    counter.innerHTML = count + " rats";
-} 
 const counter = document.createElement("div");
 counter.innerHTML = count + " rats";
 button.addEventListener("click", function () {
-  countIncrement();
+  count++;
+  counter.innerHTML = count + " rats";
 });
 app.append(counter);
 
-setInterval(countIncrement, 1000); //delay is in milliseconds
+let start_time: number | undefined;
+function countIncrement(timestamp: number) {
+    if (start_time === undefined) {
+        start_time = timestamp;
+    }
+    const elapsed = timestamp - start_time;
+    counter.innerHTML = (count + (elapsed/1000)).toFixed(2) + " rats";
+    /*
+    Once 1s has passed, increment count, update counter
+    restart timer
+    */
+    if (elapsed >= 1000) {
+        count += 1;
+        counter.innerHTML = count + " rats";
+        start_time = timestamp;
+    }
+    //function for easy reuse and setInterval
+    requestAnimationFrame(countIncrement)
+}
+
+requestAnimationFrame(countIncrement);
+
