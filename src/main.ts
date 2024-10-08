@@ -17,10 +17,27 @@ let count = 0;
 const counter = document.createElement("div");
 counter.innerHTML = count + " rats";
 button.addEventListener("click", function () {
-  count++;
-  counter.innerHTML = count + " rats";
+    count++;
+    counter.innerHTML = count + " rats";
+    growth_button.disabled = (count < 10);
 });
 app.append(counter);
+
+let growth_rate = 0;
+const growth_button = document.createElement("button");
+growth_button.innerHTML = "Create automatic rat"
+growth_button.addEventListener("click", function () {
+    growth_rate++;
+    count -= 10;
+    growth_counter.innerHTML = growth_rate + " rats per second"
+    requestAnimationFrame(countIncrement);
+});
+app.append(growth_button);
+growth_button.disabled = (count < 10);
+
+const growth_counter = document.createElement("div");
+growth_counter.innerHTML = growth_rate + " rats per second"
+app.append(growth_counter);
 
 let start_time: number | undefined;
 function countIncrement(timestamp: number) {
@@ -28,19 +45,14 @@ function countIncrement(timestamp: number) {
         start_time = timestamp;
     }
     const elapsed = timestamp - start_time;
-    counter.innerHTML = (count + (elapsed/1000)).toFixed(2) + " rats";
-    /*
-    Once 1s has passed, increment count, update counter
-    restart timer
-    */
-    if (elapsed >= 1000) {
+    const rat_per_second = elapsed / (1000 * (1 / growth_rate));
+    counter.innerHTML = (count + rat_per_second).toFixed(2) + " rats";
+        
+    if (rat_per_second >= 1) {
         count += 1;
         counter.innerHTML = count + " rats";
         start_time = timestamp;
     }
-    //function for easy reuse and setInterval
-    requestAnimationFrame(countIncrement)
+    growth_button.disabled = (count < 10);
+    requestAnimationFrame(countIncrement);
 }
-
-requestAnimationFrame(countIncrement);
-
