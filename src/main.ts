@@ -15,9 +15,9 @@ app.append(button);
 
 let count = 0;
 const counter = document.createElement("div");
-counter.innerHTML = (count + " rats");
-button.addEventListener("click", function() {
-    count++;
-    counter.innerHTML = (count + " rats");
+counter.innerHTML = count + " rats";
+button.addEventListener("click", function () {
+  count++;
+  counter.innerHTML = count + " rats";
 });
 app.append(counter);
