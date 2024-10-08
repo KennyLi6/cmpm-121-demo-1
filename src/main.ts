@@ -14,10 +14,15 @@ button.innerHTML = "🐀";
 app.append(button);
 
 let count = 0;
+function countIncrement() { //function for easy reuse and setInterval
+    count+=1;
+    counter.innerHTML = count + " rats";
+} 
 const counter = document.createElement("div");
 counter.innerHTML = count + " rats";
 button.addEventListener("click", function () {
-  count++;
-  counter.innerHTML = count + " rats";
+  countIncrement();
 });
 app.append(counter);
+
+setInterval(countIncrement, 1000); //delay is in milliseconds
