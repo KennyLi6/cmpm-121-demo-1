@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "My new remade game";
+const gameName = "Rat Infestation";
 document.title = gameName;
 
 const header = document.createElement("h1");
@@ -35,31 +35,34 @@ function increase_rps(button_obj: { amount: number; cost: number }): Command {
   };
 }
 
-function text_format(amount: number, cost: number) {
-  return `Increase rat production by ${amount}<br>Cost: ${cost.toFixed(2)}`;
+function text_format(flavor_text: string, amount: number, cost: number) {
+  return `${flavor_text}<br>Increase rat production by ${amount}<br>Cost: ${cost.toFixed(2)}`;
 }
 
 const button_A = {
   amount: 0.1,
   cost: 10,
+  flavor: "Cheese Collectors",
   get text() {
-    return text_format(this.amount, this.cost);
+    return text_format(this.flavor, this.amount, this.cost);
   },
 };
 
 const button_B = {
   amount: 2,
   cost: 100,
+  flavor: "Lab Rats",
   get text() {
-    return text_format(this.amount, this.cost);
+    return text_format(this.flavor, this.amount, this.cost);
   },
 };
 
 const button_C = {
   amount: 50,
   cost: 1000,
+  flavor: "Rat King",
   get text() {
-    return text_format(this.amount, this.cost);
+    return text_format(this.flavor, this.amount, this.cost);
   },
 };
 
