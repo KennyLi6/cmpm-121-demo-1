@@ -22,6 +22,30 @@ button.addEventListener("click", function () {
 });
 app.append(counter);
 
+interface Item {
+  name: string,
+  cost: number,
+  amount: number
+};
+
+const availableItems: Item[] = [
+  {
+    name: "Cheese Collectors",
+    amount: 0.1,
+    cost: 10,
+  },
+  {
+    name: "Lab Rats",
+    amount: 2,
+    cost: 100,
+  },
+  {
+    name: "Rat King",
+    amount: 50,
+    cost: 1000,
+  }
+];
+
 //thank you brace for helping formulate this increase_rps section of code
 type Command = () => void;
 
@@ -35,40 +59,13 @@ function increase_rps(button_obj: { amount: number; cost: number }): Command {
   };
 }
 
-function text_format(flavor_text: string, amount: number, cost: number) {
-  return `${flavor_text}<br>Increase rat production by ${amount}<br>Cost: ${cost.toFixed(2)}`;
+function text_format(button_obj: { name: string, amount: number, cost: number }) {
+  return `${button_obj.name}<br>Increase rat production by ${button_obj.amount}<br>Cost: ${button_obj.cost.toFixed(2)}`;
 }
 
-const button_A = {
-  amount: 0.1,
-  cost: 10,
-  flavor: "Cheese Collectors",
-  get text() {
-    return text_format(this.flavor, this.amount, this.cost);
-  },
-};
-
-const button_B = {
-  amount: 2,
-  cost: 100,
-  flavor: "Lab Rats",
-  get text() {
-    return text_format(this.flavor, this.amount, this.cost);
-  },
-};
-
-const button_C = {
-  amount: 50,
-  cost: 1000,
-  flavor: "Rat King",
-  get text() {
-    return text_format(this.flavor, this.amount, this.cost);
-  },
-};
-
-const increase_A: Command = increase_rps(button_A);
-const increase_B: Command = increase_rps(button_B);
-const increase_C: Command = increase_rps(button_C);
+const increase_A: Command = increase_rps(availableItems[0]);
+const increase_B: Command = increase_rps(availableItems[1]);
+const increase_C: Command = increase_rps(availableItems[2]);
 
 let growth_rate = 0;
 
@@ -103,14 +100,14 @@ function countIncrement(timestamp: number) {
   }
 
   //update button text with cost info
-  growth_button_A.innerHTML = button_A.text;
-  growth_button_B.innerHTML = button_B.text;
-  growth_button_C.innerHTML = button_C.text;
+  growth_button_A.innerHTML = text_format(availableItems[0]);
+  growth_button_B.innerHTML = text_format(availableItems[1]);
+  growth_button_C.innerHTML = text_format(availableItems[2]);
 
   //disable button if not enough rats
-  growth_button_A.disabled = count < button_A.cost;
-  growth_button_B.disabled = count < button_B.cost;
-  growth_button_C.disabled = count < button_C.cost;
+  growth_button_A.disabled = count < availableItems[0].cost;
+  growth_button_B.disabled = count < availableItems[1].cost;
+  growth_button_C.disabled = count < availableItems[2].cost;
   requestAnimationFrame(countIncrement);
 }
 
