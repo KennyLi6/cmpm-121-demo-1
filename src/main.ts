@@ -25,7 +25,7 @@ app.append(counter);
 //thank you brace for helping formulate this increase_rps section of code
 type Command = () => void;
 
-function increase_rps(button_obj: { amount: number, cost: number }): Command {
+function increase_rps(button_obj: { amount: number; cost: number }): Command {
   return () => {
     growth_rate += button_obj.amount;
     count -= button_obj.cost;
@@ -35,29 +35,33 @@ function increase_rps(button_obj: { amount: number, cost: number }): Command {
   };
 }
 
+function text_format(amount:number, cost:number) {
+  return `Increase rat production by ${amount}<br>Cost: ${cost.toFixed(2)}`;
+}
+
 const button_A = {
   amount: 0.1,
   cost: 10,
   get text() {
-    return `Increase rat production by ${this.amount}<br>Cost: ${this.cost.toFixed(2)}`;
+    return text_format(this.amount,this.cost);
   }
-}
+};
 
 const button_B = {
   amount: 2,
   cost: 100,
   get text() {
-    return `Increase rat production by ${this.amount}<br>Cost: ${this.cost.toFixed(2)}`;
+    return text_format(this.amount, this.cost);
   }
-}
+};
 
 const button_C = {
   amount: 50,
   cost: 1000,
   get text() {
-    return `Increase rat production by ${this.amount}<br>Cost: ${this.cost.toFixed(2)}`;
+    return text_format(this.amount,this.cost);
   }
-}
+};
 
 const increase_A: Command = increase_rps(button_A);
 const increase_B: Command = increase_rps(button_B);
@@ -91,15 +95,16 @@ function countIncrement(timestamp: number) {
       count += growth_rate;
       start_time = timestamp;
     }
-    
+
     counter.innerHTML = count.toFixed(2) + " rats";
   }
-  //TODO: fix buttons not dispaly proper text
-  //costs correct amount but enabled at incorrect amount
+
+  //update button text with cost info
   growth_button_A.innerHTML = button_A.text;
   growth_button_B.innerHTML = button_B.text;
   growth_button_C.innerHTML = button_C.text;
 
+  //disable button if not enough rats
   growth_button_A.disabled = count < button_A.cost;
   growth_button_B.disabled = count < button_B.cost;
   growth_button_C.disabled = count < button_C.cost;
