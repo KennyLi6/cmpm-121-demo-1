@@ -23,37 +23,42 @@ button.addEventListener("click", function () {
 app.append(counter);
 
 interface Item {
-  name: string,
-  cost: number,
-  amount: number
-};
+  name: string;
+  cost: number;
+  amount: number;
+  purchased: number;
+}
 
 const availableItems: Item[] = [
   {
     name: "Cheese Collectors",
     amount: 0.1,
     cost: 10,
+    purchased: 0,
   },
   {
     name: "Lab Rats",
     amount: 2,
     cost: 100,
+    purchased: 0,
   },
   {
     name: "Rat King",
     amount: 50,
     cost: 1000,
+    purchased: 0,
   },
 ];
 
 //thank you brace for helping formulate this increase_rps section of code
 type Command = () => void;
 
-function increase_rps(button_obj: { amount: number; cost: number }): Command {
+function increase_rps(button_obj: { amount: number; cost: number; purchased: number }): Command {
   return () => {
     growth_rate += button_obj.amount;
     count -= button_obj.cost;
     button_obj.cost = button_obj.cost * 1.15;
+    button_obj.purchased++;
     growth_counter.innerHTML = growth_rate.toFixed(1) + " rats per second";
     requestAnimationFrame(countIncrement);
   };
@@ -63,8 +68,9 @@ function text_format(button_obj: {
   name: string;
   amount: number;
   cost: number;
+  purchased: number;
 }) {
-  return `${button_obj.name}<br>Increase rat production by ${button_obj.amount}<br>Cost: ${button_obj.cost.toFixed(2)}`;
+  return `${button_obj.name}<br>Increase rat production by ${button_obj.amount}<br>Cost: ${button_obj.cost.toFixed(2)}<br>Purchased: ${button_obj.purchased}`;
 }
 
 let growth_rate = 0;
