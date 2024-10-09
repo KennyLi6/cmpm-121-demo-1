@@ -35,7 +35,7 @@ function increase_rps(button_obj: { amount: number; cost: number }): Command {
   };
 }
 
-function text_format(amount:number, cost:number) {
+function text_format(amount: number, cost: number) {
   return `Increase rat production by ${amount}<br>Cost: ${cost.toFixed(2)}`;
 }
 
@@ -43,8 +43,8 @@ const button_A = {
   amount: 0.1,
   cost: 10,
   get text() {
-    return text_format(this.amount,this.cost);
-  }
+    return text_format(this.amount, this.cost);
+  },
 };
 
 const button_B = {
@@ -52,15 +52,15 @@ const button_B = {
   cost: 100,
   get text() {
     return text_format(this.amount, this.cost);
-  }
+  },
 };
 
 const button_C = {
   amount: 50,
   cost: 1000,
   get text() {
-    return text_format(this.amount,this.cost);
-  }
+    return text_format(this.amount, this.cost);
+  },
 };
 
 const increase_A: Command = increase_rps(button_A);
