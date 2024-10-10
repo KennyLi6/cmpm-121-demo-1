@@ -11,6 +11,10 @@ app.append(header);
 
 const button = document.createElement("button");
 button.innerHTML = "🐀";
+button.title = "Enlist a rat into your army."
+button.style.width = 'fit-content';
+button.style.height = 'fit-content';
+button.style.fontSize = '50px';
 app.append(button);
 
 let count = 0;
@@ -27,6 +31,7 @@ interface Item {
   cost: number;
   amount: number;
   purchased: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
@@ -35,25 +40,46 @@ const availableItems: Item[] = [
     amount: 0.1,
     cost: 10,
     purchased: 0,
+    description: "Cheese Collectors automatically stash cheese to intice more rats to join your colony."
   },
   {
     name: "Lab Rats",
     amount: 2,
     cost: 100,
     purchased: 0,
+    description: "Studious rats that increase the effiency of Cheese Collectors."
   },
   {
     name: "Rat King",
     amount: 50,
     cost: 1000,
     purchased: 0,
+    description: "Rat kings that rally rats together."
   },
+  {
+    name: "Whisker Warriors",
+    amount: 200,
+    cost: 10000,
+    purchased: 0,
+    description: "Rat warriors make your place more inviting to other rats."
+  },
+  {
+    name: "Realm Tailors",
+    amount: 50000,
+    cost: 100000,
+    purchased: 0,
+    description: "Rat wizards that modify the realm to the benefit of ratkind."
+  }
 ];
 
 //thank you brace for helping formulate this increase_rps section of code
 type Command = () => void;
 
-function increase_rps(button_obj: { amount: number; cost: number; purchased: number }): Command {
+function increase_rps(button_obj: {
+  amount: number;
+  cost: number;
+  purchased: number;
+}): Command {
   return () => {
     growth_rate += button_obj.amount;
     count -= button_obj.cost;
@@ -80,6 +106,7 @@ for (let i = 0; i < availableItems.length; i++) {
   const increase: Command = increase_rps(availableItems[i]);
   const growth_button = document.createElement("button");
   growth_button.addEventListener("click", increase);
+  growth_button.title = availableItems[i].description;
   app.append(growth_button);
 }
 
