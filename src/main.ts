@@ -9,12 +9,13 @@ const HEADER = document.createElement("h1");
 HEADER.innerHTML = GAME_NAME;
 APP.append(HEADER);
 
+const FONT_SIZE = "50px";
 const RAT_BUTTON = document.createElement("button");
 RAT_BUTTON.innerHTML = "🐀";
 RAT_BUTTON.title = "Enlist a rat into your army.";
 RAT_BUTTON.style.width = "fit-content";
 RAT_BUTTON.style.height = "fit-content";
-RAT_BUTTON.style.fontSize = "50px";
+RAT_BUTTON.style.fontSize = FONT_SIZE;
 APP.append(RAT_BUTTON);
 
 let count = 0;
@@ -74,6 +75,7 @@ const availableItems: Item[] = [
   },
 ];
 
+const COST_MULTIPLIER = 1.15;
 //thank you brace for helping formulate this increaseRPS section of code
 type Command = () => void;
 
@@ -85,7 +87,7 @@ function increaseRPS(buttonObj: {
   return () => {
     growthRate += buttonObj.amount;
     count -= buttonObj.cost;
-    buttonObj.cost = buttonObj.cost * 1.15;
+    buttonObj.cost = buttonObj.cost * COST_MULTIPLIER;
     buttonObj.purchased++;
     GROWTH_COUNTER.innerHTML = growthRate.toFixed(1) + " rats per second";
     requestAnimationFrame(countIncrement);
@@ -119,13 +121,14 @@ const GROWTH_COUNTER = document.createElement("div");
 GROWTH_COUNTER.innerHTML = growthRate + " rats per second";
 APP.append(GROWTH_COUNTER);
 
+const TIME_INTERVAL = 1000;
 let startTime: number | undefined;
 function countIncrement(timestamp: number) {
   if (growthRate > 0) {
     if (startTime === undefined) {
       startTime = timestamp;
     }
-    if (timestamp - startTime >= 1000) {
+    if (timestamp - startTime >= TIME_INTERVAL) {
       count += growthRate;
       startTime = timestamp;
     }
