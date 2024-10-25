@@ -1,30 +1,30 @@
 import "./style.css";
 
-const app: HTMLDivElement = document.querySelector("#app")!;
+const APP: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Rat Infestation";
-document.title = gameName;
+const GAME_NAME = "Rat Infestation";
+document.title = GAME_NAME;
 
-const header = document.createElement("h1");
-header.innerHTML = gameName;
-app.append(header);
+const HEADER = document.createElement("h1");
+HEADER.innerHTML = GAME_NAME;
+APP.append(HEADER);
 
-const button = document.createElement("button");
-button.innerHTML = "🐀";
-button.title = "Enlist a rat into your army.";
-button.style.width = "fit-content";
-button.style.height = "fit-content";
-button.style.fontSize = "50px";
-app.append(button);
+const RAT_BUTTON = document.createElement("button");
+RAT_BUTTON.innerHTML = "🐀";
+RAT_BUTTON.title = "Enlist a rat into your army.";
+RAT_BUTTON.style.width = "fit-content";
+RAT_BUTTON.style.height = "fit-content";
+RAT_BUTTON.style.fontSize = "50px";
+APP.append(RAT_BUTTON);
 
 let count = 0;
-const counter = document.createElement("div");
-counter.innerHTML = count + " rats";
-button.addEventListener("click", function () {
+const RAT_COUNTER = document.createElement("div");
+RAT_COUNTER.innerHTML = count + " rats";
+RAT_BUTTON.addEventListener("click", function () {
   count++;
-  counter.innerHTML = count + " rats";
+  RAT_COUNTER.innerHTML = count + " rats";
 });
-app.append(counter);
+APP.append(RAT_COUNTER);
 
 interface Item {
   name: string;
@@ -87,7 +87,7 @@ function increaseRPS(buttonObj: {
     count -= buttonObj.cost;
     buttonObj.cost = buttonObj.cost * 1.15;
     buttonObj.purchased++;
-    growthCounter.innerHTML = growthRate.toFixed(1) + " rats per second";
+    GROWTH_COUNTER.innerHTML = growthRate.toFixed(1) + " rats per second";
     requestAnimationFrame(countIncrement);
   };
 }
@@ -109,15 +109,15 @@ for (let i = 0; i < availableItems.length; i++) {
   const growthButton = document.createElement("button");
   growthButton.addEventListener("click", increase);
   growthButton.title = availableItems[i].description;
-  app.append(growthButton);
+  APP.append(growthButton);
 }
 
-const buttonsNodeList = document.querySelectorAll("button");
+const BUTTONS_NODE_LIST = document.querySelectorAll("button");
 // Convert NodeList to an array
-const buttonsArray: HTMLButtonElement[] = Array.from(buttonsNodeList);
-const growthCounter = document.createElement("div");
-growthCounter.innerHTML = growthRate + " rats per second";
-app.append(growthCounter);
+const BUTTONS_ARRAY: HTMLButtonElement[] = Array.from(BUTTONS_NODE_LIST);
+const GROWTH_COUNTER = document.createElement("div");
+GROWTH_COUNTER.innerHTML = growthRate + " rats per second";
+APP.append(GROWTH_COUNTER);
 
 let startTime: number | undefined;
 function countIncrement(timestamp: number) {
@@ -130,14 +130,14 @@ function countIncrement(timestamp: number) {
       startTime = timestamp;
     }
 
-    counter.innerHTML = count.toFixed(2) + " rats";
+    RAT_COUNTER.innerHTML = count.toFixed(2) + " rats";
   }
 
   //update button text with cost info, skip index 0 because that is the rat button
-  for (let i = 1; i < buttonsArray.length; i++) {
-    buttonsArray[i].innerHTML = textFormat(availableItems[i - 1]);
+  for (let i = 1; i < BUTTONS_ARRAY.length; i++) {
+    BUTTONS_ARRAY[i].innerHTML = textFormat(availableItems[i - 1]);
     //disable button if not enough rats
-    buttonsArray[i].disabled = count < availableItems[i - 1].cost;
+    BUTTONS_ARRAY[i].disabled = count < availableItems[i - 1].cost;
   }
   requestAnimationFrame(countIncrement);
 }
