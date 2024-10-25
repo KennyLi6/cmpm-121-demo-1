@@ -74,60 +74,60 @@ const availableItems: Item[] = [
   },
 ];
 
-//thank you brace for helping formulate this increase_rps section of code
+//thank you brace for helping formulate this increaseRPS section of code
 type Command = () => void;
 
-function increase_rps(button_obj: {
+function increaseRPS(buttonObj: {
   amount: number;
   cost: number;
   purchased: number;
 }): Command {
   return () => {
-    growth_rate += button_obj.amount;
-    count -= button_obj.cost;
-    button_obj.cost = button_obj.cost * 1.15;
-    button_obj.purchased++;
-    growth_counter.innerHTML = growth_rate.toFixed(1) + " rats per second";
+    growthRate += buttonObj.amount;
+    count -= buttonObj.cost;
+    buttonObj.cost = buttonObj.cost * 1.15;
+    buttonObj.purchased++;
+    growthCounter.innerHTML = growthRate.toFixed(1) + " rats per second";
     requestAnimationFrame(countIncrement);
   };
 }
 
-function text_format(button_obj: {
+function textFormat(buttonObj: {
   name: string;
   amount: number;
   cost: number;
   purchased: number;
 }) {
-  return `${button_obj.name}<br>Increase rat production by ${button_obj.amount}<br>Cost: ${button_obj.cost.toFixed(2)}<br>Purchased: ${button_obj.purchased}`;
+  return `${buttonObj.name}<br>Increase rat production by ${buttonObj.amount}<br>Cost: ${buttonObj.cost.toFixed(2)}<br>Purchased: ${buttonObj.purchased}`;
 }
 
-let growth_rate = 0;
+let growthRate = 0;
 
 //iterate through list to make buttons
 for (let i = 0; i < availableItems.length; i++) {
-  const increase: Command = increase_rps(availableItems[i]);
-  const growth_button = document.createElement("button");
-  growth_button.addEventListener("click", increase);
-  growth_button.title = availableItems[i].description;
-  app.append(growth_button);
+  const increase: Command = increaseRPS(availableItems[i]);
+  const growthButton = document.createElement("button");
+  growthButton.addEventListener("click", increase);
+  growthButton.title = availableItems[i].description;
+  app.append(growthButton);
 }
 
 const buttonsNodeList = document.querySelectorAll("button");
 // Convert NodeList to an array
 const buttonsArray: HTMLButtonElement[] = Array.from(buttonsNodeList);
-const growth_counter = document.createElement("div");
-growth_counter.innerHTML = growth_rate + " rats per second";
-app.append(growth_counter);
+const growthCounter = document.createElement("div");
+growthCounter.innerHTML = growthRate + " rats per second";
+app.append(growthCounter);
 
-let start_time: number | undefined;
+let startTime: number | undefined;
 function countIncrement(timestamp: number) {
-  if (growth_rate > 0) {
-    if (start_time === undefined) {
-      start_time = timestamp;
+  if (growthRate > 0) {
+    if (startTime === undefined) {
+      startTime = timestamp;
     }
-    if (timestamp - start_time >= 1000) {
-      count += growth_rate;
-      start_time = timestamp;
+    if (timestamp - startTime >= 1000) {
+      count += growthRate;
+      startTime = timestamp;
     }
 
     counter.innerHTML = count.toFixed(2) + " rats";
@@ -135,7 +135,7 @@ function countIncrement(timestamp: number) {
 
   //update button text with cost info, skip index 0 because that is the rat button
   for (let i = 1; i < buttonsArray.length; i++) {
-    buttonsArray[i].innerHTML = text_format(availableItems[i - 1]);
+    buttonsArray[i].innerHTML = textFormat(availableItems[i - 1]);
     //disable button if not enough rats
     buttonsArray[i].disabled = count < availableItems[i - 1].cost;
   }
