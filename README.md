@@ -2,3 +2,5 @@ This is the starter code project for the `Demo 1` project in CMPM 121, Game Deve
 
 Cheese background from: [\[text\](https://www.dreamstime.com/royalty-free-stock-photos-cheese-mountains-image17580978)](https://www.momdot.com/types-of-cheese/)
 Idea inspired from: [text](https://github.com/EllieM-gd/cmpm-121-demo-1)
+
+Button layout idea inspired from: [text](https://github.com/Jsanc189/cmpm-121-demo-1)
