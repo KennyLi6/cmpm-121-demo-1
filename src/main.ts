@@ -105,13 +105,24 @@ function textFormat(buttonObj: {
 
 let growthRate = 0;
 
+const SIDEBAR = document.createElement("div");
+SIDEBAR.style.position = "fixed";
+SIDEBAR.style.top = "0";
+SIDEBAR.style.right = "0";
+SIDEBAR.style.width = "400px";
+SIDEBAR.style.height = "100%";
+document.body.appendChild(SIDEBAR);
+const SIDEBAR_TITLE = document.createElement("h1");
+SIDEBAR_TITLE.innerHTML = "Rat Upgrades";
+SIDEBAR.append(SIDEBAR_TITLE);
+
 //iterate through list to make buttons
 for (let i = 0; i < availableItems.length; i++) {
   const increase: Command = increaseRPS(availableItems[i]);
   const growthButton = document.createElement("button");
   growthButton.addEventListener("click", increase);
   growthButton.title = availableItems[i].description;
-  APP.append(growthButton);
+  SIDEBAR.append(growthButton);
 }
 
 const BUTTONS_NODE_LIST = document.querySelectorAll("button");
